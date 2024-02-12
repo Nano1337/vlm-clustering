@@ -8,6 +8,7 @@ pf = ParquetFile("captions.parquet")
 df = pf.to_pandas()
 embeddings = np.load('embeddings.npy')
 
+# Note: Working Demo: https://atlas.nomic.ai/data/haoliyin/lazy-jemison/map
 
 topic_model = data_inference.NomicTopicOptions(build_topic_model=True, topic_label_field="caption")
 
@@ -19,4 +20,3 @@ dataset = atlas.map_data(
 )
 
 
-# note: inquisitive-noether worked for topic modeling

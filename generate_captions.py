@@ -24,11 +24,11 @@ def image_qa(s, image_path, question, regex=None):
 
 def save_image(image, index):
     """
-    Saves an image to a temporary file and returns the file path.
+    Saves an image to a temporary file and returns the index with the file path.
     """
     with tempfile.NamedTemporaryFile(delete=False, suffix=".png") as temp_file:
         Image.fromarray(image).save(temp_file.name)
-        return temp_file.name
+        return index, temp_file.name
 
 def delete_file(file_path):
     """
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     """
 
     file_path = "/home/haoli/Documents/data/nsd_images/nsd_stimuli.hdf5"
-    parquet_file = "captions.parquet"
+    parquet_file = "captions_ordered.parquet"
     captions = []
     counter = 0
     with h5py.File(file_path, 'r') as f:
@@ -64,13 +64,15 @@ if __name__ == "__main__":
             
             data = f['imgBrick'][counter:counter+chunk_size]
 
-            # Parallelize the saving of images to temporary files
-            temp_file_paths = []
+            temp_file_paths = [None] * len(data)
             with concurrent.futures.ThreadPoolExecutor() as executor:
-                future_to_image = {executor.submit(save_image, image, i): i for i, image in enumerate(data)}
-                for future in concurrent.futures.as_completed(future_to_image):
-                    temp_file_path = future.result()
-                    temp_file_paths.append(temp_file_path)
+                # Start all the save_image tasks and pass the index with each image
+                futures = [executor.submit(save_image, image, i) for i, image in enumerate(data)]
+                
+                for future in concurrent.futures.as_completed(futures):
+                    index, temp_file_path = future.result()
+                    # Place the path in the correct order by using the index
+                    temp_file_paths[index] = temp_file_path
 
             # generate captions for each image
             for i, file_path in enumerate(temp_file_paths): 

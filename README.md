@@ -53,4 +53,13 @@ git clone https://huggingface.co/nomic-ai/nomic-embed-text-v1
 
 2. Extract embeddings by running `generate_embeddings.py`
 
-3. I'll eventually bootstrap my own GPU-accelerated pipeline of UMAP dim reduction -> HDBSCAN -> topic modeling visualization as an academic exercise, but for the sake of time I'll just visualize topic clusters with their atlas library. 
+3. I'll eventually bootstrap my own GPU-accelerated pipeline of UMAP dim reduction -> HDBSCAN -> topic modeling visualization as an academic exercise, but for the sake of time I'll just visualize topic clusters with their atlas library. Sign up at nomic.ai and then run `generate_nomic_map.py` with the correct inputs. 
+
+## Corresponding Image data
+ 
+After exploring the Nomic topic clusters, you may want to see the image corresponding to the generated caption. Luckily, there's an id associated with each caption so you can call the `find_img.py` script. For example, if you wanted to see image 345, then run: 
+```bash
+python find_img.py --id 345
+```
+
+and the output will be shown in `figs/image.png`
