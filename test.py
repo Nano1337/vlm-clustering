@@ -30,7 +30,6 @@ if __name__ == "__main__":
         ]
     }
 
-
     # load dictionary data into pandas dataframe
     df = pd.DataFrame(data)
     print(df)
