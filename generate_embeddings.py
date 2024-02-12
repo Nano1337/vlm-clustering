@@ -18,7 +18,7 @@ def mean_pooling(model_output, attention_mask):
 
 if __name__ == "__main__": 
 
-    pf = ParquetFile("captions.parquet")
+    pf = ParquetFile("captions_ordered.parquet")
     df = pf.to_pandas()
     
     # read in batches of 10 

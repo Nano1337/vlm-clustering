@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 from fastparquet import ParquetFile
 
-pf = ParquetFile("captions.parquet")
+pf = ParquetFile("captions_ordered.parquet")
 df = pf.to_pandas()
 embeddings = np.load('embeddings.npy')
 
