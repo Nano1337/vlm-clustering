@@ -4,6 +4,9 @@ Purpose: to see if topic modeling of generated captions from image data allows f
 
 This is part of another project, so I will be using the image portion of the natural scenes dataset (NSD). 
 
+Here's an example of what the end product looks like: 
+![Screenshot](screenshot.png)
+
 ## Run VLM captioning: 
 
 1. To install the NSD image dataset and to download the hdf5 file, please run `download_data.py`, which is set up with the requests library to pick up the download where it left off if the download process was interrupted. Note that this image dataset is ~36GB, which may take a while to download depending on your bandwidth. 
